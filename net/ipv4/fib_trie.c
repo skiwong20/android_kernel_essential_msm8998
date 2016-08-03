@@ -2462,7 +2462,7 @@ static struct key_vector *fib_route_get_idx(struct fib_route_iter *iter,
 	if (iter->pos > 0 && pos >= iter->pos) {
 		key = iter->key;
 	} else {
-		iter->pos = 1;
+		iter->pos = 0;
 		key = 0;
 	}
 
