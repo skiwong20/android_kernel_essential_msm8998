@@ -1010,7 +1010,7 @@ static int unix_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
 		goto out;
 	addr_len = err;
 
-	err = mutex_lock_interruptible(&u->readlock);
+	err = mutex_lock_interruptible(&u->bindlock);
 	if (err)
 		goto out;
 
@@ -1064,7 +1064,7 @@ static int unix_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
 out_unlock:
 	spin_unlock(&unix_table_lock);
 out_up:
-	mutex_unlock(&u->readlock);
+	mutex_unlock(&u->bindlock);
 out:
 	return err;
 }
