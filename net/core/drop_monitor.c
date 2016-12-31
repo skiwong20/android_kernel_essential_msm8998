@@ -107,6 +107,7 @@ static struct sk_buff *reset_per_cpu_data(struct per_cpu_dm_data *data)
 	}
 	msg = nla_data(nla);
 	memset(msg, 0, al);
+	genlmsg_end(skb, msg_header);
 	goto out;
 
 err:
