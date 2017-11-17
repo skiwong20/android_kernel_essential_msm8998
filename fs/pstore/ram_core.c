@@ -48,15 +48,16 @@ static inline size_t buffer_start(struct persistent_ram_zone *prz)
 	return atomic_read(&prz->buffer->start);
 }
 
+static DEFINE_RAW_SPINLOCK(buffer_lock);
+
 /* increase and wrap the start pointer, returning the old value */
 static size_t buffer_start_add(struct persistent_ram_zone *prz, size_t a)
 {
 	int old;
 	int new;
-	unsigned long flags = 0;
+	unsigned long flags;
 
-	if (!(prz->flags & PRZ_FLAG_NO_LOCK))
-		raw_spin_lock_irqsave(&prz->buffer_lock, flags);
+	raw_spin_lock_irqsave(&buffer_lock, flags);
 
 	old = atomic_read(&prz->buffer->start);
 	new = old + a;
