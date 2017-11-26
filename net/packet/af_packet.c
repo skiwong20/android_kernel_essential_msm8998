@@ -2658,6 +2658,7 @@ static int packet_snd(struct socket *sock, struct msghdr *msg, size_t len)
 	int vnet_hdr_len;
 	struct packet_sock *po = pkt_sk(sk);
 	unsigned short gso_type = 0;
+	bool has_vnet_hdr = false;
 	int hlen, tlen, linear;
 	int extra_len = 0;
 	ssize_t n;
